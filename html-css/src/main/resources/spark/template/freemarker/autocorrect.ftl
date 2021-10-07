@@ -3,7 +3,7 @@
 
 <!-- CODE FOR TEXT BOX GOES HERE -->
 
-  <h1>Autocorrect</h1>
+  <h1>${message}</h1>
 
 </#assign>
 <#include "main.ftl">
