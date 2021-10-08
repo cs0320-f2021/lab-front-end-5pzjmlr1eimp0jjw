@@ -2,8 +2,13 @@
 
 
 <!-- CODE FOR TEXT BOX GOES HERE -->
+  ${message}
+  <form method="POST" action="/results">
+    <label for="text">Enter words here: </label><br>
+    <textarea name="text" id="text"></textarea><br>
+    <input type="submit">
+  </form>
 
-  <h1>${message}</h1>
-
+  <div>${suggestions}</div>
 </#assign>
 <#include "main.ftl">

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -155,27 +156,32 @@ public final class Main {
    */
 
   private static class AutocorrectHandler implements TemplateViewRoute{
-    Map<String, String>
-        variables = ImmutableMap.of("title", "GOOD LOOKING", "message", "THIS IS A TEST", "suggestions", "");
     @Override
     public ModelAndView handle(Request request, Response response) throws Exception {
+      Map<String, String>
+          variables = ImmutableMap.of(
+              "title", "GOOD LOOKING",
+          "message", "THIS IS A TEST",
+          "suggestions", "");
       return new ModelAndView(variables, "autocorrect.ftl");
     }
   }
 
   private static class SubmitHandler implements TemplateViewRoute{
-    Map<String, String>
-        variables2 = ImmutableMap.of("title", "GOOD LOOKING", "message", "THIS IS A TEST", "suggestions", "");
     @Override
     public ModelAndView handle(Request request, Response response) throws Exception {
+
       QueryParamsMap qm = request.queryMap();
       String textFromTextField = qm.value("text");
       Set<String> mySet = ac.suggest(textFromTextField);
-      String output = "";
-      for (String str: mySet){
-        output = output.concat(str);
-      }
-      variables2.replace("suggestions", output);
+      String suggestions = String.join(" ", mySet);
+
+      Map<String, String>
+          variables2 = ImmutableMap.of(
+          "title", "GOOD LOOKING",
+          "message", "THIS IS A TEST",
+          "suggestions", suggestions);
+
       return new ModelAndView(variables2, "autocorrect.ftl");
     }
   }
